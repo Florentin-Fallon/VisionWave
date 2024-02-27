@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, TouchableOpacity, Image, Text } from 'react-native';
 import { useState, useEffect } from 'react';
+import { createClient } from 'pexels';
 
 export default function App() {
     const [img, setImg] = useState('');
-
+    const client = createClient('dJPiCXI3dFo6JOPUPL3hpjlAzw0AycGgd55Q3wiG9JM3rdTTSqFaCuRn');
     const getCat = () => {
         fetch('https://api.pexels.com/v1/curated', {
             headers: {
@@ -13,9 +14,13 @@ export default function App() {
         })
         .then((res) => res.json())
         .then((data) => {
-            const randomIndex = Math.floor(Math.random() * data.photos.length);
-            const randomPhoto = data.photos[randomIndex];
-            setImg(randomPhoto.src.large);
+            if (data.photos && data.photos.length > 0) {
+                const randomIndex = Math.floor(Math.random() * data.photos.length);
+                const randomPhoto = data.photos[randomIndex];
+                setImg(randomPhoto.src.large);
+            } else {
+                console.error('Aucune photo disponible dans les données reçues de l\'API');
+            }
         })
         .catch((error) => {
             console.error('Erreur lors de la récupération de l\'image :', error);

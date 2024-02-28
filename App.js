@@ -37,7 +37,7 @@ export default function App() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Une image de chat aléatoire</Text>
+            <Text style={styles.title}>Une image aléatoire !</Text>
             <Image source={{uri: img}} style={styles.img} />
             <TouchableOpacity
                 style={styles.button}
